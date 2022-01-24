@@ -13,7 +13,11 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val phonebook = getPhonebook()
     }
+
+    external fun getPhonebook(): Array<PhonebookEntry>
 
     companion object {
         // Used to load the 'testapp' library on application startup.
@@ -22,3 +26,5 @@ class MainActivity : AppCompatActivity() {
         }
     }
 }
+
+class PhonebookEntry(name: String, number: String)
