@@ -41,72 +41,55 @@ class MainActivity : AppCompatActivity() {
         for (i in 1 until phonebook.size) {
 
             previousNameViewId = addTextView(
+                true,
                 phonebook[i].name,
-                padding,
                 previousNameViewId,
-                true
+                padding
             )
 
             previousNumberViewId = addTextView(
+                false,
                 phonebook[i].number,
-                padding,
                 previousNumberViewId,
-                false
+                padding
             )
         }
     }
 
-    private fun addTextView(text: String, padding: Int, previousId: Int, is_name: Boolean): Int {
+    private fun addTextView(is_name: Boolean, text: String, previousId: Int, padding: Int): Int {
 
-        val tv = TextView(this)
+        val tv = TextView(this).apply {
+            id = View.generateViewId()
+            this.text = text
+            setTextSize(TypedValue.COMPLEX_UNIT_SP, 20f)
+            setPadding(padding)
+            layoutParams = ConstraintLayout.LayoutParams(
+                ConstraintLayout.LayoutParams.MATCH_PARENT,
+                ConstraintLayout.LayoutParams.WRAP_CONTENT
+            )
+        }
 
-        tv.id = View.generateViewId()
-        tv.text = text
-        tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20f)
-        tv.setPadding(padding)
-        tv.layoutParams = ConstraintLayout.LayoutParams(
-            ConstraintLayout.LayoutParams.MATCH_PARENT,
-            ConstraintLayout.LayoutParams.WRAP_CONTENT
-        )
-
-        connectTextView(
-            tv,
-            if (is_name) binding.root else binding.constraintLayoutNumber,
-            previousId,
-            is_name
-        )
-
-        return tv.id
-    }
-
-    private fun connectTextView(tv: TextView, layout: ConstraintLayout, previousId: Int, is_name: Boolean) {
-
+        val layout = if (is_name) binding.root else binding.constraintLayoutNumber
         layout.addView(tv)
+
         val cs = ConstraintSet()
         cs.clone(layout)
-
         cs.connect(
             tv.id,
             if (is_name) ConstraintSet.START else ConstraintSet.END,
             layout.id,
             if (is_name) ConstraintSet.START else ConstraintSet.END
         )
-
         cs.connect(
             tv.id,
             if (is_name) ConstraintSet.END else ConstraintSet.START,
-            binding.guidelineCenter.id,
+            binding.guidelineMainCenter.id,
             ConstraintSet.START
         )
-
-        cs.connect(
-            tv.id,
-            ConstraintSet.TOP,
-            previousId,
-            ConstraintSet.BOTTOM
-        )
-
+        cs.connect(tv.id, ConstraintSet.TOP, previousId, ConstraintSet.BOTTOM)
         cs.applyTo(layout)
+
+        return tv.id
     }
 
     fun goToInfo(view: View) {

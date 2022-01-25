@@ -7,6 +7,50 @@
     tools:context=".InfoActivity">
 
     <TextView
+        android:id="@+id/textViewBrandLabel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:text="@string/brand_text"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineInfoCenter"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewModelLabel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:text="@string/model_text"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineInfoCenter"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewBrandLabel" />
+
+    <TextView
+        android:id="@+id/textViewOSLabel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:text="@string/os_text"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineInfoCenter"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewModelLabel" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineInfoCenter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintGuide_percent="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
         android:id="@+id/textViewBrandInfo"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -39,47 +83,4 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewModelInfo"
         tools:text="os" />
 
-    <TextView
-        android:id="@+id/textViewBrandText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:text="@string/brand_text"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@+id/guidelineInfoCenter"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textViewModelText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:text="@string/model_text"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@+id/guidelineInfoCenter"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewBrandText" />
-
-    <TextView
-        android:id="@+id/textViewOSText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:text="@string/os_text"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@+id/guidelineInfoCenter"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewModelText" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineInfoCenter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintGuide_percent="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

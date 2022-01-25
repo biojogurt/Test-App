@@ -3,5 +3,5 @@
     <string name="brand_text">Бренд</string>
     <string name="model_text">Модель</string>
     <string name="os_text">Версия ОС</string>
-    <string name="button_text">К информации\nоб устройстве</string>
+    <string name="button_text">Информация\nоб устройстве</string>
 </resources>
