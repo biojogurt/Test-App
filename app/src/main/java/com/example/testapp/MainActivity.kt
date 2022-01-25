@@ -1,5 +1,6 @@
 package com.example.testapp
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.View
@@ -106,6 +107,10 @@ class MainActivity : AppCompatActivity() {
         )
 
         cs.applyTo(layout)
+    }
+
+    fun goToInfo(view: View) {
+        startActivity(Intent(this, InfoActivity::class.java))
     }
 
     private external fun getPhonebook(): Array<PhonebookEntry>
