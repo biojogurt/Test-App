@@ -7,8 +7,8 @@ Java_com_example_testapp_MainActivity_getPhonebook(JNIEnv *env, jobject)
     srand(time(nullptr));
     jclass phClass = env->FindClass("com/example/testapp/PhonebookEntry");
 
-    // будет сгенерировано между 5 и 20 парами имя-номер
-    int num_entries = rand() % 15 + 5;
+    // будет сгенерировано между 20 и 35 парами имя-номер
+    int num_entries = rand() % 15 + 20;
     jobjectArray phArray = env->NewObjectArray(num_entries, phClass, nullptr);
 
     for (int j = 0; j < num_entries; ++j)

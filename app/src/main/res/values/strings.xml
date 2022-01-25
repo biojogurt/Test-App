@@ -4,4 +4,6 @@
     <string name="model_text">Модель</string>
     <string name="os_text">Версия ОС</string>
     <string name="button_text">Информация\nоб устройстве</string>
+    <string name="names_text">Фамилии абонентов</string>
+    <string name="numbers_text">Телефонные номера</string>
 </resources>

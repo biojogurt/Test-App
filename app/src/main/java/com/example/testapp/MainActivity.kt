@@ -27,19 +27,16 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.textViewTopName.text = mainViewModel.phonebook[0].name
-        binding.textViewTopNumber.text = mainViewModel.phonebook[0].number
-
-        // запоминает id последнего добавленного элемента чтобы прикреплять к нему последующий
-        var previousNameViewId = binding.textViewTopName.id
-        var previousNumberViewId = binding.textViewTopNumber.id
-
         // высчитывает внутренние границы элементов в dp
         val padding = TypedValue.applyDimension(
             TypedValue.COMPLEX_UNIT_DIP,
             5f,
             resources.displayMetrics
         ).toInt()
+
+        // запоминает id последнего добавленного элемента чтобы прикреплять к нему последующий
+        var previousNameViewId = addFirstTextView(true, mainViewModel.phonebook[0].name, padding)
+        var previousNumberViewId = addFirstTextView(false, mainViewModel.phonebook[0].number, padding)
 
         for (i in 1 until mainViewModel.phonebook.size) {
 
@@ -59,9 +56,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun addTextView(is_name: Boolean, text: String, previousId: Int, padding: Int): Int {
-
-        val tv = TextView(this).apply {
+    private fun createTextView(text: String, padding: Int): TextView {
+        return TextView(this).apply {
             id = View.generateViewId()
             this.text = text
             setTextSize(TypedValue.COMPLEX_UNIT_SP, 20f)
@@ -71,24 +67,34 @@ class MainActivity : AppCompatActivity() {
                 ConstraintLayout.LayoutParams.WRAP_CONTENT
             )
         }
+    }
 
-        val layout = if (is_name) binding.root else binding.constraintLayoutNumber
+    private fun addFirstTextView(is_name: Boolean, text: String, padding: Int): Int {
+
+        val tv = createTextView(text, padding)
+        val layout = if (is_name) binding.constraintLayoutNames else binding.constraintLayoutNumbers
         layout.addView(tv)
 
         val cs = ConstraintSet()
         cs.clone(layout)
-        cs.connect(
-            tv.id,
-            if (is_name) ConstraintSet.START else ConstraintSet.END,
-            layout.id,
-            if (is_name) ConstraintSet.START else ConstraintSet.END
-        )
-        cs.connect(
-            tv.id,
-            if (is_name) ConstraintSet.END else ConstraintSet.START,
-            binding.guidelineMainCenter.id,
-            ConstraintSet.START
-        )
+        cs.connect(tv.id, ConstraintSet.START, layout.id, ConstraintSet.START)
+        cs.connect(tv.id, ConstraintSet.END, layout.id, ConstraintSet.END)
+        cs.connect(tv.id, ConstraintSet.TOP, layout.id, ConstraintSet.TOP)
+        cs.applyTo(layout)
+
+        return tv.id
+    }
+
+    private fun addTextView(is_name: Boolean, text: String, previousId: Int, padding: Int): Int {
+
+        val tv = createTextView(text, padding)
+        val layout = if (is_name) binding.constraintLayoutNames else binding.constraintLayoutNumbers
+        layout.addView(tv)
+
+        val cs = ConstraintSet()
+        cs.clone(layout)
+        cs.connect(tv.id, ConstraintSet.START, layout.id, ConstraintSet.START)
+        cs.connect(tv.id, ConstraintSet.END, layout.id, ConstraintSet.END)
         cs.connect(tv.id, ConstraintSet.TOP, previousId, ConstraintSet.BOTTOM)
         cs.applyTo(layout)
 
