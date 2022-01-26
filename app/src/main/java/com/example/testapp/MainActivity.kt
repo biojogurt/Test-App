@@ -27,6 +27,11 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // задает кнопке запуск окна с инфой о системе
+        binding.buttonToInfo.setOnClickListener {
+            startActivity(Intent(this, InfoActivity::class.java))
+        }
+
         // высчитывает внутренние границы элементов в dp
         val padding = TypedValue.applyDimension(
             TypedValue.COMPLEX_UNIT_DIP,
@@ -35,20 +40,20 @@ class MainActivity : AppCompatActivity() {
         ).toInt()
 
         // запоминает id последнего добавленного элемента чтобы прикреплять к нему последующий
-        var previousNameViewId = addFirstTextView(true, mainViewModel.phonebook[0].name, padding)
-        var previousNumberViewId = addFirstTextView(false, mainViewModel.phonebook[0].number, padding)
+        var previousNameViewId = addFirstTextView(binding.constraintLayoutNames, mainViewModel.phonebook[0].name, padding)
+        var previousNumberViewId = addFirstTextView(binding.constraintLayoutNumbers, mainViewModel.phonebook[0].number, padding)
 
         for (i in 1 until mainViewModel.phonebook.size) {
 
             previousNameViewId = addTextView(
-                true,
+                binding.constraintLayoutNames,
                 mainViewModel.phonebook[i].name,
                 previousNameViewId,
                 padding
             )
 
             previousNumberViewId = addTextView(
-                false,
+                binding.constraintLayoutNumbers,
                 mainViewModel.phonebook[i].number,
                 previousNumberViewId,
                 padding
@@ -69,10 +74,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun addFirstTextView(is_name: Boolean, text: String, padding: Int): Int {
+    private fun addFirstTextView(layout: ConstraintLayout, text: String, padding: Int): Int {
 
         val tv = createTextView(text, padding)
-        val layout = if (is_name) binding.constraintLayoutNames else binding.constraintLayoutNumbers
         layout.addView(tv)
 
         val cs = ConstraintSet()
@@ -85,10 +89,9 @@ class MainActivity : AppCompatActivity() {
         return tv.id
     }
 
-    private fun addTextView(is_name: Boolean, text: String, previousId: Int, padding: Int): Int {
+    private fun addTextView(layout: ConstraintLayout, text: String, previousId: Int, padding: Int): Int {
 
         val tv = createTextView(text, padding)
-        val layout = if (is_name) binding.constraintLayoutNames else binding.constraintLayoutNumbers
         layout.addView(tv)
 
         val cs = ConstraintSet()
@@ -99,10 +102,6 @@ class MainActivity : AppCompatActivity() {
         cs.applyTo(layout)
 
         return tv.id
-    }
-
-    fun goToInfo(view: View) {
-        startActivity(Intent(this, InfoActivity::class.java))
     }
 
     private external fun getPhonebook(): Array<PhonebookEntry>

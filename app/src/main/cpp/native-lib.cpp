@@ -16,14 +16,14 @@ Java_com_example_testapp_MainActivity_getPhonebook(JNIEnv *env, jobject)
         std::string name, number;
 
         // генерирует фамилию - рандомный набор букв от 8 до 12 символов
-        name += (char) (rand() % 26 + 'A');
+        name += static_cast<char> (rand() % 26 + 'A');
         int name_length = rand() % 4 + 7;
         for (int i = 0; i < name_length; ++i)
-            name += (char) (rand() % 26 + 'a');
+            name += static_cast<char> (rand() % 26 + 'a');
 
         // генерирует номер - рандомный набор цифр
         for (int i = 0; i < 11; ++i)
-            number += (char) (rand() % 10 + '0');
+            number += static_cast<char> (rand() % 10 + '0');
 
         env->SetObjectArrayElement(phArray, j, env->NewObject(phClass,
                                                               env->GetMethodID(phClass, "<init>",
